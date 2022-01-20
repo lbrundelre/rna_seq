@@ -1,0 +1,21 @@
+###use these commands to get an idea of the quality of the transcriptome assembly
+
+#run these commands in the command line
+#search for certain pattern in the merged_all.gtf
+
+#get number of exons and transcripts
+awk 'BEGIN {exons = 0 ; transcripts = 0} {if ($3 == "exon") {++exons} ;if ($3 == "transcript") {++transcripts}} END {print "exons: " exons "\n" "transcripts: " transcripts}' merged_all.gtf
+#total number of exons: 1,532,315
+#total number of transcripts: 240,721
+
+#get number of genes (without duplicates)
+awk '{print $10}' merged_all.gtf | sort | uniq -c | wc -l
+#total number of genes: 58,111
+
+#get number of novel genes (novel genes have transcript IDs with pattern "MSTRG.NUMBER")
+awk '{print $12}' merged_all.gtf | sort | uniq | grep "MSTRG" | wc -l
+#total number of novel genes: 3,777
+
+#get number of genes and transcripts that have at least two exons
+awk '{print $14}' merged_all.gtf | grep '2' | wc -l
+#total number of genes and transcripts with more than one exon: 398,276

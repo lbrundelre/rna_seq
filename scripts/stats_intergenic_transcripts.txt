@@ -1,0 +1,5 @@
+##get number of unique (=no duplicates) transcript ids among intergenic transcripts
+#use this command in the command line (with srun)
+awk '{print $4}' intergenic_transcripts.txt | sort | uniq -c | wc -l
+
+#number of intergenic transcripts: 611
